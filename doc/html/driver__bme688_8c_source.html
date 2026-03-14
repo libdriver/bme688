@@ -2457,9 +2457,9 @@ $(function(){initNavTree('driver__bme688_8c_source.html','',''); });
 <div class="line"><a id="l02965" name="l02965"></a><span class="lineno"> 2965</span> </div>
 <div class="line"><a id="l02966" name="l02966"></a><span class="lineno"> 2966</span>            <span class="keywordflow">return</span> 4;                                                                          <span class="comment">/* return error */</span></div>
 <div class="line"><a id="l02967" name="l02967"></a><span class="lineno"> 2967</span>        }</div>
-<div class="line"><a id="l02968" name="l02968"></a><span class="lineno"> 2968</span>        *pressure_raw = ((((int32_t)(buf[0])) &lt;&lt; 12) |</div>
-<div class="line"><a id="l02969" name="l02969"></a><span class="lineno"> 2969</span>                        (((int32_t)(buf[1])) &lt;&lt; 4) |</div>
-<div class="line"><a id="l02970" name="l02970"></a><span class="lineno"> 2970</span>                        (((int32_t)(buf[2])) &gt;&gt; 4));                                           <span class="comment">/* set pressure raw */</span></div>
+<div class="line"><a id="l02968" name="l02968"></a><span class="lineno"> 2968</span>        *pressure_raw = ((((uint32_t)(buf[0])) &lt;&lt; 12) |</div>
+<div class="line"><a id="l02969" name="l02969"></a><span class="lineno"> 2969</span>                        (((uint32_t)(buf[1])) &lt;&lt; 4) |</div>
+<div class="line"><a id="l02970" name="l02970"></a><span class="lineno"> 2970</span>                        (((uint32_t)(buf[2])) &gt;&gt; 4));                                          <span class="comment">/* set pressure raw */</span></div>
 <div class="line"><a id="l02971" name="l02971"></a><span class="lineno"> 2971</span>        res = a_bme688_compensate_pressure(handle, *pressure_raw, pressure_pa);                <span class="comment">/* compensate pressure */</span></div>
 <div class="line"><a id="l02972" name="l02972"></a><span class="lineno"> 2972</span>        <span class="keywordflow">if</span> (res != 0)                                                                          <span class="comment">/* check result */</span></div>
 <div class="line"><a id="l02973" name="l02973"></a><span class="lineno"> 2973</span>        {</div>
@@ -2500,9 +2500,9 @@ $(function(){initNavTree('driver__bme688_8c_source.html','',''); });
 <div class="line"><a id="l03008" name="l03008"></a><span class="lineno"> 3008</span> </div>
 <div class="line"><a id="l03009" name="l03009"></a><span class="lineno"> 3009</span>            <span class="keywordflow">return</span> 4;                                                                          <span class="comment">/* return error */</span></div>
 <div class="line"><a id="l03010" name="l03010"></a><span class="lineno"> 3010</span>        }</div>
-<div class="line"><a id="l03011" name="l03011"></a><span class="lineno"> 3011</span>        *pressure_raw = ((((int32_t)(buf[0])) &lt;&lt; 12) |</div>
-<div class="line"><a id="l03012" name="l03012"></a><span class="lineno"> 3012</span>                        (((int32_t)(buf[1])) &lt;&lt; 4) |</div>
-<div class="line"><a id="l03013" name="l03013"></a><span class="lineno"> 3013</span>                        (((int32_t)(buf[2])) &gt;&gt; 4));                                           <span class="comment">/* set pressure raw */</span></div>
+<div class="line"><a id="l03011" name="l03011"></a><span class="lineno"> 3011</span>        *pressure_raw = ((((uint32_t)(buf[0])) &lt;&lt; 12) |</div>
+<div class="line"><a id="l03012" name="l03012"></a><span class="lineno"> 3012</span>                        (((uint32_t)(buf[1])) &lt;&lt; 4) |</div>
+<div class="line"><a id="l03013" name="l03013"></a><span class="lineno"> 3013</span>                        (((uint32_t)(buf[2])) &gt;&gt; 4));                                          <span class="comment">/* set pressure raw */</span></div>
 <div class="line"><a id="l03014" name="l03014"></a><span class="lineno"> 3014</span>        res = a_bme688_compensate_pressure(handle, *pressure_raw, pressure_pa);                <span class="comment">/* compensate pressure */</span></div>
 <div class="line"><a id="l03015" name="l03015"></a><span class="lineno"> 3015</span>        <span class="keywordflow">if</span> (res != 0)                                                                          <span class="comment">/* check result */</span></div>
 <div class="line"><a id="l03016" name="l03016"></a><span class="lineno"> 3016</span>        {</div>
@@ -2897,9 +2897,9 @@ $(function(){initNavTree('driver__bme688_8c_source.html','',''); });
 <div class="line"><a id="l03448" name="l03448"></a><span class="lineno"> 3448</span> </div>
 <div class="line"><a id="l03449" name="l03449"></a><span class="lineno"> 3449</span>            <span class="keywordflow">return</span> 4;                                                                          <span class="comment">/* return error */</span></div>
 <div class="line"><a id="l03450" name="l03450"></a><span class="lineno"> 3450</span>        }</div>
-<div class="line"><a id="l03451" name="l03451"></a><span class="lineno"> 3451</span>        *pressure_raw = ((((int32_t)(buf[0])) &lt;&lt; 12) |</div>
-<div class="line"><a id="l03452" name="l03452"></a><span class="lineno"> 3452</span>                        (((int32_t)(buf[1])) &lt;&lt; 4) |</div>
-<div class="line"><a id="l03453" name="l03453"></a><span class="lineno"> 3453</span>                        (((int32_t)(buf[2])) &gt;&gt; 4));                                           <span class="comment">/* set pressure raw */</span></div>
+<div class="line"><a id="l03451" name="l03451"></a><span class="lineno"> 3451</span>        *pressure_raw = ((((uint32_t)(buf[0])) &lt;&lt; 12) |</div>
+<div class="line"><a id="l03452" name="l03452"></a><span class="lineno"> 3452</span>                        (((uint32_t)(buf[1])) &lt;&lt; 4) |</div>
+<div class="line"><a id="l03453" name="l03453"></a><span class="lineno"> 3453</span>                        (((uint32_t)(buf[2])) &gt;&gt; 4));                                          <span class="comment">/* set pressure raw */</span></div>
 <div class="line"><a id="l03454" name="l03454"></a><span class="lineno"> 3454</span>        res = a_bme688_compensate_pressure(handle, *pressure_raw, pressure_pa);                <span class="comment">/* compensate pressure */</span></div>
 <div class="line"><a id="l03455" name="l03455"></a><span class="lineno"> 3455</span>        <span class="keywordflow">if</span> (res != 0)                                                                          <span class="comment">/* check result */</span></div>
 <div class="line"><a id="l03456" name="l03456"></a><span class="lineno"> 3456</span>        {</div>
@@ -2948,9 +2948,9 @@ $(function(){initNavTree('driver__bme688_8c_source.html','',''); });
 <div class="line"><a id="l03499" name="l03499"></a><span class="lineno"> 3499</span> </div>
 <div class="line"><a id="l03500" name="l03500"></a><span class="lineno"> 3500</span>            <span class="keywordflow">return</span> 4;                                                                          <span class="comment">/* return error */</span></div>
 <div class="line"><a id="l03501" name="l03501"></a><span class="lineno"> 3501</span>        }</div>
-<div class="line"><a id="l03502" name="l03502"></a><span class="lineno"> 3502</span>        *pressure_raw = ((((int32_t)(buf[0])) &lt;&lt; 12) |</div>
-<div class="line"><a id="l03503" name="l03503"></a><span class="lineno"> 3503</span>                        (((int32_t)(buf[1])) &lt;&lt; 4) |</div>
-<div class="line"><a id="l03504" name="l03504"></a><span class="lineno"> 3504</span>                        (((int32_t)(buf[2])) &gt;&gt; 4));                                           <span class="comment">/* set pressure raw */</span></div>
+<div class="line"><a id="l03502" name="l03502"></a><span class="lineno"> 3502</span>        *pressure_raw = ((((uint32_t)(buf[0])) &lt;&lt; 12) |</div>
+<div class="line"><a id="l03503" name="l03503"></a><span class="lineno"> 3503</span>                        (((uint32_t)(buf[1])) &lt;&lt; 4) |</div>
+<div class="line"><a id="l03504" name="l03504"></a><span class="lineno"> 3504</span>                        (((uint32_t)(buf[2])) &gt;&gt; 4));                                          <span class="comment">/* set pressure raw */</span></div>
 <div class="line"><a id="l03505" name="l03505"></a><span class="lineno"> 3505</span>        res = a_bme688_compensate_pressure(handle, *pressure_raw, pressure_pa);                <span class="comment">/* compensate pressure */</span></div>
 <div class="line"><a id="l03506" name="l03506"></a><span class="lineno"> 3506</span>        <span class="keywordflow">if</span> (res != 0)                                                                          <span class="comment">/* check result */</span></div>
 <div class="line"><a id="l03507" name="l03507"></a><span class="lineno"> 3507</span>        {</div>
@@ -3078,9 +3078,9 @@ $(function(){initNavTree('driver__bme688_8c_source.html','',''); });
 <div class="line"><a id="l03652" name="l03652"></a><span class="lineno"> 3652</span> </div>
 <div class="line"><a id="l03653" name="l03653"></a><span class="lineno"> 3653</span>            <span class="keywordflow">return</span> 4;                                                                          <span class="comment">/* return error */</span></div>
 <div class="line"><a id="l03654" name="l03654"></a><span class="lineno"> 3654</span>        }</div>
-<div class="line"><a id="l03655" name="l03655"></a><span class="lineno"> 3655</span>        *pressure_raw = ((((int32_t)(buf[0])) &lt;&lt; 12) |</div>
-<div class="line"><a id="l03656" name="l03656"></a><span class="lineno"> 3656</span>                        (((int32_t)(buf[1])) &lt;&lt; 4) |</div>
-<div class="line"><a id="l03657" name="l03657"></a><span class="lineno"> 3657</span>                        (((int32_t)(buf[2])) &gt;&gt; 4));                                           <span class="comment">/* set pressure raw */</span></div>
+<div class="line"><a id="l03655" name="l03655"></a><span class="lineno"> 3655</span>        *pressure_raw = ((((uint32_t)(buf[0])) &lt;&lt; 12) |</div>
+<div class="line"><a id="l03656" name="l03656"></a><span class="lineno"> 3656</span>                        (((uint32_t)(buf[1])) &lt;&lt; 4) |</div>
+<div class="line"><a id="l03657" name="l03657"></a><span class="lineno"> 3657</span>                        (((uint32_t)(buf[2])) &gt;&gt; 4));                                          <span class="comment">/* set pressure raw */</span></div>
 <div class="line"><a id="l03658" name="l03658"></a><span class="lineno"> 3658</span>        res = a_bme688_compensate_pressure(handle, *pressure_raw, pressure_pa);                <span class="comment">/* compensate pressure */</span></div>
 <div class="line"><a id="l03659" name="l03659"></a><span class="lineno"> 3659</span>        <span class="keywordflow">if</span> (res != 0)                                                                          <span class="comment">/* check result */</span></div>
 <div class="line"><a id="l03660" name="l03660"></a><span class="lineno"> 3660</span>        {</div>
@@ -3171,9 +3171,9 @@ $(function(){initNavTree('driver__bme688_8c_source.html','',''); });
 <div class="line"><a id="l03745" name="l03745"></a><span class="lineno"> 3745</span> </div>
 <div class="line"><a id="l03746" name="l03746"></a><span class="lineno"> 3746</span>            <span class="keywordflow">return</span> 4;                                                                          <span class="comment">/* return error */</span></div>
 <div class="line"><a id="l03747" name="l03747"></a><span class="lineno"> 3747</span>        }</div>
-<div class="line"><a id="l03748" name="l03748"></a><span class="lineno"> 3748</span>        *pressure_raw = ((((int32_t)(buf[0])) &lt;&lt; 12) |</div>
-<div class="line"><a id="l03749" name="l03749"></a><span class="lineno"> 3749</span>                        (((int32_t)(buf[1])) &lt;&lt; 4) |</div>
-<div class="line"><a id="l03750" name="l03750"></a><span class="lineno"> 3750</span>                        (((int32_t)(buf[2])) &gt;&gt; 4));                                           <span class="comment">/* set pressure raw */</span></div>
+<div class="line"><a id="l03748" name="l03748"></a><span class="lineno"> 3748</span>        *pressure_raw = ((((uint32_t)(buf[0])) &lt;&lt; 12) |</div>
+<div class="line"><a id="l03749" name="l03749"></a><span class="lineno"> 3749</span>                        (((uint32_t)(buf[1])) &lt;&lt; 4) |</div>
+<div class="line"><a id="l03750" name="l03750"></a><span class="lineno"> 3750</span>                        (((uint32_t)(buf[2])) &gt;&gt; 4));                                          <span class="comment">/* set pressure raw */</span></div>
 <div class="line"><a id="l03751" name="l03751"></a><span class="lineno"> 3751</span>        res = a_bme688_compensate_pressure(handle, *pressure_raw, pressure_pa);                <span class="comment">/* compensate pressure */</span></div>
 <div class="line"><a id="l03752" name="l03752"></a><span class="lineno"> 3752</span>        <span class="keywordflow">if</span> (res != 0)                                                                          <span class="comment">/* check result */</span></div>
 <div class="line"><a id="l03753" name="l03753"></a><span class="lineno"> 3753</span>        {</div>
@@ -3331,9 +3331,9 @@ $(function(){initNavTree('driver__bme688_8c_source.html','',''); });
 <div class="line"><a id="l03920" name="l03920"></a><span class="lineno"> 3920</span> </div>
 <div class="line"><a id="l03921" name="l03921"></a><span class="lineno"> 3921</span>                <span class="keywordflow">return</span> 7;                                                                              <span class="comment">/* return error */</span></div>
 <div class="line"><a id="l03922" name="l03922"></a><span class="lineno"> 3922</span>            }</div>
-<div class="line"><a id="l03923" name="l03923"></a><span class="lineno"> 3923</span>            pressure_raw = ((((int32_t)(buf[0])) &lt;&lt; 12) |</div>
-<div class="line"><a id="l03924" name="l03924"></a><span class="lineno"> 3924</span>                            (((int32_t)(buf[1])) &lt;&lt; 4) |</div>
-<div class="line"><a id="l03925" name="l03925"></a><span class="lineno"> 3925</span>                            (((int32_t)(buf[2])) &gt;&gt; 4));                                               <span class="comment">/* set pressure raw */</span></div>
+<div class="line"><a id="l03923" name="l03923"></a><span class="lineno"> 3923</span>            pressure_raw = ((((uint32_t)(buf[0])) &lt;&lt; 12) |</div>
+<div class="line"><a id="l03924" name="l03924"></a><span class="lineno"> 3924</span>                            (((uint32_t)(buf[1])) &lt;&lt; 4) |</div>
+<div class="line"><a id="l03925" name="l03925"></a><span class="lineno"> 3925</span>                            (((uint32_t)(buf[2])) &gt;&gt; 4));                                              <span class="comment">/* set pressure raw */</span></div>
 <div class="line"><a id="l03926" name="l03926"></a><span class="lineno"> 3926</span>            res = a_bme688_compensate_pressure(handle, pressure_raw, &amp;pressure_pa);                    <span class="comment">/* compensate pressure */</span></div>
 <div class="line"><a id="l03927" name="l03927"></a><span class="lineno"> 3927</span>            <span class="keywordflow">if</span> (res != 0)                                                                              <span class="comment">/* check result */</span></div>
 <div class="line"><a id="l03928" name="l03928"></a><span class="lineno"> 3928</span>            {</div>
@@ -3457,9 +3457,9 @@ $(function(){initNavTree('driver__bme688_8c_source.html','',''); });
 <div class="line"><a id="l04046" name="l04046"></a><span class="lineno"> 4046</span> </div>
 <div class="line"><a id="l04047" name="l04047"></a><span class="lineno"> 4047</span>                <span class="keywordflow">return</span> 7;                                                                              <span class="comment">/* return error */</span></div>
 <div class="line"><a id="l04048" name="l04048"></a><span class="lineno"> 4048</span>            }</div>
-<div class="line"><a id="l04049" name="l04049"></a><span class="lineno"> 4049</span>            pressure_raw = ((((int32_t)(buf[0])) &lt;&lt; 12) |</div>
-<div class="line"><a id="l04050" name="l04050"></a><span class="lineno"> 4050</span>                            (((int32_t)(buf[1])) &lt;&lt; 4) |</div>
-<div class="line"><a id="l04051" name="l04051"></a><span class="lineno"> 4051</span>                            (((int32_t)(buf[2])) &gt;&gt; 4));                                               <span class="comment">/* set pressure raw */</span></div>
+<div class="line"><a id="l04049" name="l04049"></a><span class="lineno"> 4049</span>            pressure_raw = ((((uint32_t)(buf[0])) &lt;&lt; 12) |</div>
+<div class="line"><a id="l04050" name="l04050"></a><span class="lineno"> 4050</span>                            (((uint32_t)(buf[1])) &lt;&lt; 4) |</div>
+<div class="line"><a id="l04051" name="l04051"></a><span class="lineno"> 4051</span>                            (((uint32_t)(buf[2])) &gt;&gt; 4));                                              <span class="comment">/* set pressure raw */</span></div>
 <div class="line"><a id="l04052" name="l04052"></a><span class="lineno"> 4052</span>            res = a_bme688_compensate_pressure(handle, pressure_raw, &amp;pressure_pa);                    <span class="comment">/* compensate pressure */</span></div>
 <div class="line"><a id="l04053" name="l04053"></a><span class="lineno"> 4053</span>            <span class="keywordflow">if</span> (res != 0)                                                                              <span class="comment">/* check result */</span></div>
 <div class="line"><a id="l04054" name="l04054"></a><span class="lineno"> 4054</span>            {</div>
@@ -3583,9 +3583,9 @@ $(function(){initNavTree('driver__bme688_8c_source.html','',''); });
 <div class="line"><a id="l04172" name="l04172"></a><span class="lineno"> 4172</span> </div>
 <div class="line"><a id="l04173" name="l04173"></a><span class="lineno"> 4173</span>                <span class="keywordflow">return</span> 7;                                                                              <span class="comment">/* return error */</span></div>
 <div class="line"><a id="l04174" name="l04174"></a><span class="lineno"> 4174</span>            }</div>
-<div class="line"><a id="l04175" name="l04175"></a><span class="lineno"> 4175</span>            pressure_raw = ((((int32_t)(buf[0])) &lt;&lt; 12) |</div>
-<div class="line"><a id="l04176" name="l04176"></a><span class="lineno"> 4176</span>                            (((int32_t)(buf[1])) &lt;&lt; 4) |</div>
-<div class="line"><a id="l04177" name="l04177"></a><span class="lineno"> 4177</span>                            (((int32_t)(buf[2])) &gt;&gt; 4));                                               <span class="comment">/* set pressure raw */</span></div>
+<div class="line"><a id="l04175" name="l04175"></a><span class="lineno"> 4175</span>            pressure_raw = ((((uint32_t)(buf[0])) &lt;&lt; 12) |</div>
+<div class="line"><a id="l04176" name="l04176"></a><span class="lineno"> 4176</span>                            (((uint32_t)(buf[1])) &lt;&lt; 4) |</div>
+<div class="line"><a id="l04177" name="l04177"></a><span class="lineno"> 4177</span>                            (((uint32_t)(buf[2])) &gt;&gt; 4));                                              <span class="comment">/* set pressure raw */</span></div>
 <div class="line"><a id="l04178" name="l04178"></a><span class="lineno"> 4178</span>            res = a_bme688_compensate_pressure(handle, pressure_raw, &amp;pressure_pa);                    <span class="comment">/* compensate pressure */</span></div>
 <div class="line"><a id="l04179" name="l04179"></a><span class="lineno"> 4179</span>            <span class="keywordflow">if</span> (res != 0)                                                                              <span class="comment">/* check result */</span></div>
 <div class="line"><a id="l04180" name="l04180"></a><span class="lineno"> 4180</span>            {</div>
