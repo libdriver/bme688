@@ -892,14 +892,28 @@ uint8_t bme688_init(bme688_handle_t *handle)
     if (a_bme688_iic_spi_read(handle, BME688_REG_ID, (uint8_t *)&id, 1) != 0)        /* read chip id */
     {
         handle->debug_print("bme688: read id failed.\n");                            /* read id failed */
-        (void)handle->iic_deinit();                                                  /* iic deinit */
-
+        if (handle->iic_spi == BME688_INTERFACE_IIC)                                 /* iic interface */
+        {
+            (void)handle->iic_deinit();                                              /* iic deinit */
+        }
+        else                                                                         /* spi interface */
+        {
+            (void)handle->spi_deinit();                                              /* spi deinit */
+        }
+        
         return 4;                                                                    /* return error */
     }
     if (id != 0x61)                                                                  /* check id */
     {
         handle->debug_print("bme688: id is error.\n");                               /* id is error */
-        (void)handle->iic_deinit();                                                  /* iic deinit */
+        if (handle->iic_spi == BME688_INTERFACE_IIC)                                 /* iic interface */
+        {
+            (void)handle->iic_deinit();                                              /* iic deinit */
+        }
+        else                                                                         /* spi interface */
+        {
+            (void)handle->spi_deinit();                                              /* spi deinit */
+        }
 
         return 4;                                                                    /* return error */
     }
@@ -907,14 +921,28 @@ uint8_t bme688_init(bme688_handle_t *handle)
                              (uint8_t *)&id, 1) != 0)                                /* read variant id */
     {
         handle->debug_print("bme688: read variant id failed.\n");                    /* read variant id failed */
-        (void)handle->iic_deinit();                                                  /* iic deinit */
+        if (handle->iic_spi == BME688_INTERFACE_IIC)                                 /* iic interface */
+        {
+            (void)handle->iic_deinit();                                              /* iic deinit */
+        }
+        else                                                                         /* spi interface */
+        {
+            (void)handle->spi_deinit();                                              /* spi deinit */
+        }
 
         return 4;                                                                    /* return error */
     }
     if (id != 0x01)                                                                  /* check variant id */
     {
         handle->debug_print("bme688: variant id is error.\n");                       /* variant id is error */
-        (void)handle->iic_deinit();                                                  /* iic deinit */
+        if (handle->iic_spi == BME688_INTERFACE_IIC)                                 /* iic interface */
+        {
+            (void)handle->iic_deinit();                                              /* iic deinit */
+        }
+        else                                                                         /* spi interface */
+        {
+            (void)handle->spi_deinit();                                              /* spi deinit */
+        }
 
         return 4;                                                                    /* return error */
     }
@@ -922,14 +950,28 @@ uint8_t bme688_init(bme688_handle_t *handle)
     if (a_bme688_iic_spi_write(handle, BME688_REG_RESET, &reg, 1) != 0)              /* reset the chip */
     {
         handle->debug_print("bme688: reset failed.\n");                              /* reset failed */
-        (void)handle->iic_deinit();                                                  /* iic deinit */
+        if (handle->iic_spi == BME688_INTERFACE_IIC)                                 /* iic interface */
+        {
+            (void)handle->iic_deinit();                                              /* iic deinit */
+        }
+        else                                                                         /* spi interface */
+        {
+            (void)handle->spi_deinit();                                              /* spi deinit */
+        }
 
         return 5;                                                                    /* return error */
     }
     handle->delay_ms(5);                                                             /* delay 5ms */
     if (a_bme688_get_nvm_calibration(handle) != 0)                                   /* get nvm calibration */
     {
-        (void)handle->iic_deinit();                                                  /* iic deinit */
+        if (handle->iic_spi == BME688_INTERFACE_IIC)                                 /* iic interface */
+        {
+            (void)handle->iic_deinit();                                              /* iic deinit */
+        }
+        else                                                                         /* spi interface */
+        {
+            (void)handle->spi_deinit();                                              /* spi deinit */
+        }
 
         return 6;                                                                    /* return error */
     }
@@ -4273,7 +4315,7 @@ uint8_t bme688_parallel_progress(bme688_handle_t *handle)
             }
             handle->parallel_data_flag = 0;                                                            /* init 0 */
         }
-        if (trigger != 0)                                                                              /* check trigger */
+        if (trigger == 0)                                                                              /* check trigger */
         {
             return 5;                                                                                  /* return not ready */
         }
@@ -4431,6 +4473,58 @@ uint8_t bme688_parallel_config(bme688_handle_t *handle, bme688_parallel_config_t
     handle->parallel_data_len = config->profile_len;                                      /* set parallel data length */
     
     return 0;                                                                             /* success return 0 */
+}
+
+/**
+ * @brief     set ambient temperature
+ * @param[in] *handle pointer to a bme688 handle structure
+ * @param[in] amb_temp_c ambient temperature in C
+ * @return    status code
+ *            - 0 success
+ *            - 2 handle is NULL
+ *            - 3 handle is not initialized
+ * @note      none
+ */
+uint8_t bme688_set_ambient_temperature(bme688_handle_t *handle, int8_t amb_temp_c)
+{
+    if (handle == NULL)                   /* check handle */
+    {
+        return 2;                         /* return error */
+    }
+    if (handle->inited != 1)              /* check handle initialization */
+    {
+        return 3;                         /* return error */
+    }
+    
+    handle->amb_temp = amb_temp_c;        /* set ambient temperature */
+    
+    return 0;                             /* success return 0 */
+}
+
+/**
+ * @brief      get ambient temperature
+ * @param[in]  *handle pointer to a bme688 handle structure
+ * @param[out] *amb_temp_c pointer to an ambient temperature buffer
+ * @return     status code
+ *             - 0 success
+ *             - 2 handle is NULL
+ *             - 3 handle is not initialized
+ * @note       none
+ */
+uint8_t bme688_get_ambient_temperature(bme688_handle_t *handle, int8_t *amb_temp_c)
+{
+    if (handle == NULL)                    /* check handle */
+    {
+        return 2;                          /* return error */
+    }
+    if (handle->inited != 1)               /* check handle initialization */
+    {
+        return 3;                          /* return error */
+    }
+    
+    *amb_temp_c = handle->amb_temp;        /* set ambient temperature */
+    
+    return 0;                              /* success return 0 */
 }
 
 /**
