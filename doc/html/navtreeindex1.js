@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"group__bme688__base__driver.html#ggab9d3aade9f3d9dd1bff6485a1c4c09bba3870733f7d80eb3f441e910e305e1cf9":[0,0,1,15,1],
+"group__bme688__base__driver.html#ggab9d3aade9f3d9dd1bff6485a1c4c09bba7a9a20c4e04a6932cf861cdde729098d":[0,0,1,15,2],
 "group__bme688__base__driver.html#ggab9d3aade9f3d9dd1bff6485a1c4c09bba86a1575b971193aa350db162873ac9c5":[0,0,1,15,0],
 "group__bme688__base__driver.html#ggad3bd0f02e64bd00f46e3b70b7e04434ba96c79bc155d6ac84e114286dcedbf8d7":[0,0,1,9,1],
 "group__bme688__base__driver.html#ggad3bd0f02e64bd00f46e3b70b7e04434baaa8e5305cc2584e184444a8fee163f85":[0,0,1,9,0],
