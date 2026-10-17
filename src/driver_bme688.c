@@ -3857,9 +3857,7 @@ uint8_t bme688_read(bme688_handle_t *handle, bme688_section_t section,
  *            - 5 not ready
  *            - 6 index is invalid
  *            - 7 compensate failed
- *            - 8 gas is invalid
- *            - 9 heater is not stable
- *            - 10 sequence is lost
+ *            - 8 sequence is lost
  * @note      none
  */
 uint8_t bme688_parallel_progress(bme688_handle_t *handle)
@@ -4022,7 +4020,7 @@ uint8_t bme688_parallel_progress(bme688_handle_t *handle)
                                                   NULL, 0);                                            /* run the callback */
                     }
                     
-                    return 10;                                                                         /* return error */
+                    return 8;                                                                          /* return error */
                 }
             }
             handle->parallel_sequence_trigger[0] = 1;                                                  /* set trigger */
@@ -4148,7 +4146,7 @@ uint8_t bme688_parallel_progress(bme688_handle_t *handle)
                                                   NULL, 0);                                            /* run the callback */
                     }
                     
-                    return 10;                                                                         /* return error */
+                    return 8;                                                                          /* return error */
                 }
             }
             handle->parallel_sequence_trigger[1] = 1;                                                  /* set trigger */
@@ -4274,18 +4272,18 @@ uint8_t bme688_parallel_progress(bme688_handle_t *handle)
                                                   NULL, 0);                                            /* run the callback */
                     }
                     
-                    return 10;                                                                         /* return error */
+                    return 8;                                                                          /* return error */
                 }
             }
             handle->parallel_sequence_trigger[2] = 1;                                                  /* set trigger */
             handle->parallel_sequence_number[2] = reg;                                                 /* set sequence number */
             if ((buf[1] & (1 << 5)) == 0)                                                              /* check gas valid */
             {
-                return 8;                                                                              /* return error */
+                goto step3;                                                                            /* dummy gas slot, skip it */
             }
             if ((buf[1] & (1 << 4)) == 0)                                                              /* check heat */
             {
-                return 9;                                                                              /* return error */
+                goto step3;                                                                            /* dummy gas slot, skip it */
             }
             handle->parallel_data[ind].channel = ind;                                                  /* set channel */
             handle->parallel_data[ind].temperature_raw = temperature_raw;                              /* set temperature raw */
@@ -4304,6 +4302,8 @@ uint8_t bme688_parallel_progress(bme688_handle_t *handle)
                                           &handle->parallel_data[ind], 1);                             /* run the callback */
             }
         }
+        
+        step3:
         if (a_bme688_calculate_parallel_counter(handle) >= handle->parallel_data_len)                  /* check parallel counter */
         {
             if (handle->receive_callback != NULL)                                                      /* not null */
@@ -4372,7 +4372,7 @@ uint8_t bme688_parallel_reset(bme688_handle_t *handle)
  *            - 3 handle is not initialized
  *            - 4 config is invalid
  *            - 5 profile_len > 10
- *            - 6 ms >= 0x0783
+ *            - 6 ms > 0x0783
  * @note      none
  */
 uint8_t bme688_parallel_config(bme688_handle_t *handle, bme688_parallel_config_t *config)
@@ -4430,9 +4430,9 @@ uint8_t bme688_parallel_config(bme688_handle_t *handle, bme688_parallel_config_t
     
     factor = 0;                                                                           /* init 0 */
     ms = (uint16_t)config->shared_heater_dur;                                             /* set ms */
-    if (ms >= 0x0783U)                                                                    /* check ms */
+    if (ms > 0x0783U)                                                                     /* check ms */
     {
-        handle->debug_print("bme688: ms >= 0x0783.\n");                                   /* ms >= 0x0783 */
+        handle->debug_print("bme688: ms > 0x0783.\n");                                    /* ms > 0x0783 */
 
         return 6;                                                                         /* return error */
     }
