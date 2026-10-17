@@ -406,7 +406,7 @@ static uint8_t a_bme688_get_nvm_calibration(bme688_handle_t *handle)
 
         return 1;                                                                              /* return error */
     }
-    handle->par_h1 = (uint16_t)((uint16_t)buf[1] << 4 | buf[0] & 0xF);                         /* set h1 */
+    handle->par_h1 = (uint16_t)((uint16_t)buf[1] << 4 | (buf[0] & 0xF));                       /* set h1 */
     if (a_bme688_iic_spi_read(handle, BME688_REG_NVM_PAR_H2_H, (uint8_t *)buf, 2) != 0)        /* read h2 */
     {
         handle->debug_print("bme688: get calibration data failed.\n");                         /* get calibration data failed */
@@ -490,7 +490,7 @@ static uint8_t a_bme688_get_nvm_calibration(bme688_handle_t *handle)
 
         return 1;                                                                              /* return error */
     }
-    handle->range_sw_err = (int8_t)((reg >> 4) & 0xF);                                         /* set range switch error */
+    handle->range_sw_err = (int8_t)(((int8_t)(reg & 0xF0)) / 16);                              /* set range switch error */
     handle->t_fine = 0.0f;                                                                     /* init 0 */
     handle->amb_temp = 25;                                                                     /* set 25c */
 
@@ -646,7 +646,6 @@ static uint8_t a_bme688_compensate_heat(bme688_handle_t *handle, float temp, uin
 
 /**
  * @brief      compensate gas resistance
- * @param[in]  *handle pointer to a bme688 handle structure
  * @param[in]  gas_res_adc gas resistance adc
  * @param[in]  gas_range gas range
  * @param[out] *ohms pointer to an ohms buffer
@@ -655,7 +654,7 @@ static uint8_t a_bme688_compensate_heat(bme688_handle_t *handle, float temp, uin
  *             - 1 compensate gas resistance failed
  * @note       none
  */
-static uint8_t a_bme688_compensate_gas_resistance(bme688_handle_t *handle, uint16_t gas_res_adc, uint8_t gas_range, float *ohms)
+static uint8_t a_bme688_compensate_gas_resistance(uint16_t gas_res_adc, uint8_t gas_range, float *ohms)
 {
     float calc_gas_res;
     
@@ -785,7 +784,7 @@ uint8_t bme688_get_interface(bme688_handle_t *handle, bme688_interface_t *interf
  *            - 2 handle is NULL
  *            - 3 linked functions is NULL
  *            - 4 id is error
- *            - 5 get nvm calibration failed
+ *            - 5 reset failed
  *            - 6 read calibration failed
  * @note      none
  */
@@ -2256,7 +2255,7 @@ uint8_t bme688_idac_heater_convert_to_data(bme688_handle_t *handle, uint8_t reg,
         return 3;                               /* return error */
     }
     
-    *ma = (float)(((reg >> 1) + 1) / 8);        /* convert raw data to real data */
+    *ma = (float)(((reg >> 1) + 1) / 8.0f);     /* convert raw data to real data */
     
     return 0;                                   /* success return 0 */
 }
@@ -2268,7 +2267,7 @@ uint8_t bme688_idac_heater_convert_to_data(bme688_handle_t *handle, uint8_t reg,
  * @param[out] *reg pointer to a register raw buffer
  * @return     status code
  *             - 0 success
- *             - 1 ms >= 0x0FC0
+ *             - 1 ms > 0x0FC0
  *             - 2 handle is NULL
  *             - 3 handle is not initialized
  * @note       none
@@ -2286,9 +2285,9 @@ uint8_t bme688_gas_wait_convert_to_register(bme688_handle_t *handle, uint16_t ms
         return 3;                                              /* return error */
     }
     
-    if (ms >= 0xFC0)                                           /* check ms */
+    if (ms > 0xFC0)                                            /* check ms */
     {
-        handle->debug_print("bme688: ms >= 0x0FC0.\n");        /* ms >= 0x0FC0 */
+        handle->debug_print("bme688: ms > 0x0FC0.\n");         /* ms > 0x0FC0 */
 
         return 1;                                              /* return error */
     }
@@ -2313,7 +2312,7 @@ uint8_t bme688_gas_wait_convert_to_register(bme688_handle_t *handle, uint16_t ms
  * @param[out] *reg pointer to a register raw buffer
  * @return     status code
  *             - 0 success
- *             - 1 ms >= 0x0783
+ *             - 1 ms > 0x0783
  *             - 2 handle is NULL
  *             - 3 handle is not initialized
  * @note       none
@@ -2333,9 +2332,9 @@ uint8_t bme688_gas_wait_shared_convert_to_register(bme688_handle_t *handle, floa
     }
     
     ms = (uint16_t)m;                                          /* set ms */
-    if (ms >= 0x0783U)                                         /* check ms */
+    if (ms > 0x0783U)                                          /* check ms */
     {
-        handle->debug_print("bme688: ms >= 0x0783.\n");        /* ms >= 0x0783 */
+        handle->debug_print("bme688: ms > 0x0783.\n");         /* ms > 0x0783 */
 
         return 1;                                              /* return error */
     }
@@ -2824,7 +2823,7 @@ uint8_t bme688_read_gas_resistance(bme688_handle_t *handle, bme688_section_t sec
         }
         *adc_raw = (((uint16_t)buf[0]) << 2) | ((buf[1] >> 6) & 0x03);                         /* set adc raw */
         *adc_range = buf[1] & 0x0F;                                                            /* set adc range */
-        res = a_bme688_compensate_gas_resistance(handle, *adc_raw , *adc_range, ohms);         /* compensate gas resistance */
+        res = a_bme688_compensate_gas_resistance(*adc_raw , *adc_range, ohms);                 /* compensate gas resistance */
         if (res != 0)                                                                          /* check result */
         {
             handle->debug_print("bme688: compensate gas resistance failed.\n");                /* compensate gas resistance failed */
@@ -2878,7 +2877,7 @@ uint8_t bme688_read_gas_resistance(bme688_handle_t *handle, bme688_section_t sec
         }
         *adc_raw = (((uint16_t)buf[0]) << 2) | ((buf[1] >> 6) & 0x03);                         /* set adc raw */
         *adc_range = buf[1] & 0x0F;                                                            /* set adc range */
-        res = a_bme688_compensate_gas_resistance(handle, *adc_raw , *adc_range, ohms);         /* compensate gas resistance */
+        res = a_bme688_compensate_gas_resistance(*adc_raw , *adc_range, ohms);                 /* compensate gas resistance */
         if (res != 0)                                                                          /* check result */
         {
             handle->debug_print("bme688: compensate gas resistance failed.\n");                /* compensate gas resistance failed */
@@ -3734,7 +3733,7 @@ uint8_t bme688_read(bme688_handle_t *handle, bme688_section_t section,
         }
         *adc_raw = (((uint16_t)buf[0]) << 2) | ((buf[1] >> 6) & 0x03);                         /* set adc raw */
         *adc_range = buf[1] & 0x0F;                                                            /* set adc range */
-        res = a_bme688_compensate_gas_resistance(handle, *adc_raw , *adc_range, ohms);         /* compensate gas resistance */
+        res = a_bme688_compensate_gas_resistance(*adc_raw , *adc_range, ohms);                 /* compensate gas resistance */
         if (res != 0)                                                                          /* check result */
         {
             handle->debug_print("bme688: compensate gas resistance failed.\n");                /* compensate gas resistance failed */
@@ -3827,7 +3826,7 @@ uint8_t bme688_read(bme688_handle_t *handle, bme688_section_t section,
         }
         *adc_raw = (((uint16_t)buf[0]) << 2) | ((buf[1] >> 6) & 0x03);                         /* set adc raw */
         *adc_range = buf[1] & 0x0F;                                                            /* set adc range */
-        res = a_bme688_compensate_gas_resistance(handle, *adc_raw , *adc_range, ohms);         /* compensate gas resistance */
+        res = a_bme688_compensate_gas_resistance(*adc_raw , *adc_range, ohms);                 /* compensate gas resistance */
         if (res != 0)                                                                          /* check result */
         {
             handle->debug_print("bme688: compensate gas resistance failed.\n");                /* compensate gas resistance failed */
@@ -3990,7 +3989,7 @@ uint8_t bme688_parallel_progress(bme688_handle_t *handle)
             }
             adc_raw = (((uint16_t)buf[0]) << 2) | ((buf[1] >> 6) & 0x03);                              /* set adc raw */
             adc_range = buf[1] & 0x0F;                                                                 /* set adc range */
-            res = a_bme688_compensate_gas_resistance(handle, adc_raw , adc_range, &ohms);              /* compensate gas resistance */
+            res = a_bme688_compensate_gas_resistance(adc_raw , adc_range, &ohms);                      /* compensate gas resistance */
             if (res != 0)                                                                              /* check result */
             {
                 handle->debug_print("bme688: compensate gas resistance failed.\n");                    /* compensate gas resistance failed */
@@ -4116,7 +4115,7 @@ uint8_t bme688_parallel_progress(bme688_handle_t *handle)
             }
             adc_raw = (((uint16_t)buf[0]) << 2) | ((buf[1] >> 6) & 0x03);                              /* set adc raw */
             adc_range = buf[1] & 0x0F;                                                                 /* set adc range */
-            res = a_bme688_compensate_gas_resistance(handle, adc_raw , adc_range, &ohms);              /* compensate gas resistance */
+            res = a_bme688_compensate_gas_resistance(adc_raw , adc_range, &ohms);                      /* compensate gas resistance */
             if (res != 0)                                                                              /* check result */
             {
                 handle->debug_print("bme688: compensate gas resistance failed.\n");                    /* compensate gas resistance failed */
@@ -4242,7 +4241,7 @@ uint8_t bme688_parallel_progress(bme688_handle_t *handle)
             }
             adc_raw = (((uint16_t)buf[0]) << 2) | ((buf[1] >> 6) & 0x03);                              /* set adc raw */
             adc_range = buf[1] & 0x0F;                                                                 /* set adc range */
-            res = a_bme688_compensate_gas_resistance(handle, adc_raw , adc_range, &ohms);              /* compensate gas resistance */
+            res = a_bme688_compensate_gas_resistance(adc_raw , adc_range, &ohms);                      /* compensate gas resistance */
             if (res != 0)                                                                              /* check result */
             {
                 handle->debug_print("bme688: compensate gas resistance failed.\n");                    /* compensate gas resistance failed */

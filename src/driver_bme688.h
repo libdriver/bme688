@@ -88,7 +88,7 @@ typedef enum
  */
 typedef enum
 {
-    BME688_OVERSAMPLING_SKIP = 0x00,        /**< oversampling x1 */
+    BME688_OVERSAMPLING_SKIP = 0x00,        /**< skip */
     BME688_OVERSAMPLING_x1   = 0x01,        /**< oversampling x1 */
     BME688_OVERSAMPLING_x2   = 0x02,        /**< oversampling x2 */
     BME688_OVERSAMPLING_x4   = 0x03,        /**< oversampling x4 */
@@ -473,7 +473,7 @@ uint8_t bme688_get_ambient_temperature(bme688_handle_t *handle, int8_t *amb_temp
  *            - 2 handle is NULL
  *            - 3 linked functions is NULL
  *            - 4 id is error
- *            - 5 get nvm calibration failed
+ *            - 5 reset failed
  *            - 6 read calibration failed
  * @note      none
  */
@@ -1197,7 +1197,7 @@ uint8_t bme688_idac_heater_convert_to_data(bme688_handle_t *handle, uint8_t reg,
  * @param[out] *reg pointer to a register raw buffer
  * @return     status code
  *             - 0 success
- *             - 1 ms >= 0x0FC0
+ *             - 1 ms > 0x0FC0
  *             - 2 handle is NULL
  *             - 3 handle is not initialized
  * @note       none
@@ -1211,7 +1211,7 @@ uint8_t bme688_gas_wait_convert_to_register(bme688_handle_t *handle, uint16_t ms
  * @param[out] *reg pointer to a register raw buffer
  * @return     status code
  *             - 0 success
- *             - 1 ms >= 0x0783
+ *             - 1 ms > 0x0783
  *             - 2 handle is NULL
  *             - 3 handle is not initialized
  * @note       none
