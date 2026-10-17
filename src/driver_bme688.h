@@ -631,9 +631,7 @@ uint8_t bme688_read_gas_resistance(bme688_handle_t *handle, bme688_section_t sec
  *            - 5 not ready
  *            - 6 index is invalid
  *            - 7 compensate failed
- *            - 8 gas is invalid
- *            - 9 heater is not stable
- *            - 10 sequence is lost
+ *            - 8 sequence is lost
  * @note      none
  */
 uint8_t bme688_parallel_progress(bme688_handle_t *handle);
@@ -660,7 +658,7 @@ uint8_t bme688_parallel_reset(bme688_handle_t *handle);
  *            - 3 handle is not initialized
  *            - 4 config is invalid
  *            - 5 profile_len > 10
- *            - 6 ms >= 0x0783
+ *            - 6 ms > 0x0783
  * @note      none
  */
 uint8_t bme688_parallel_config(bme688_handle_t *handle, bme688_parallel_config_t *config);
